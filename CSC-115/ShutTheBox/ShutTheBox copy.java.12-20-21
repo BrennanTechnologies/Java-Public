@@ -1,0 +1,329 @@
+
+import java.util.Scanner;
+import java.util.Random;
+/*
+    Pseudocode for the Shut the Box Project:
+    1) Initialize: Initialize the match variables.
+    
+    2) Outer-Loop:
+        A) Initialize the game variables.
+        B) Get the seed.
+        C) Inner-Loop:
+            1. Display Tiles: Display the available tiles.
+            2. Roll the die/dice: Roll the 1 die or 2 dice (depending upon status of tiles 7, 8, and 9).
+            3. Continue?:   Use the continuePlaying() method of the class file to determine if the game should
+                            continue (the sum of some/all of the available tiles equals the pips of the die/dice roll).
+
+                Note:   Simply use the following statement:
+                        boolean keepPlaying =
+                          ShutTheBox_HelperClass.continuePlaying(status, sumRoll);
+
+                Note:   The continuePlaying() method is a static-method; therefore, simply use the class name to
+                        call the method. This is similar to calling any method in the Math class; refer to section 2 of
+                        chapter 4 of the textbook.
+
+                Note:   The parameter status is a 9-element boolean array representing the status of the 9-tiles in
+                        ascending order. The element at index zero of the array corresponds to tile-1 (the tile with a
+                        value of 1); the element at index one of the array corresponds to tile-2 (the tile with a value of 2); etc.
+    
+                Note:   The parameter sumRoll is an int representing the value of the dice roll.
+    
+                Note:   The method returns true if the sum of some/all of the available tiles equals the pips of the
+                        die/dice roll; otherwise, the method returns false.
+    
+                Note:   You all use methods all the time, right? You use nextInt() and subString() and Pow() ... and
+                        you don't worry about writing those methods, do you? No! You just use them! Same thing
+                        with the continuePlaying() method. Just use it.
+
+            3a. If the game should continue:
+                    1) Prompt: Prompt the user for the tiles to close.
+
+                    2) Close the Tiles: Close the selected tiles.
+                    
+                        Note:   Multiple tiles may be requested: "1" or "1 2 4". The user enters input on one line. Therefore,
+                                receive the input as a String. Then, loop through the String object and parse the data.
+                             
+                                1st Approach:   Understanding that only single-digit tiles exist and that the char data type are
+                                                really int data (just interpreted differently by Java), loop through the String
+                                                object and parse each character individually. A simple math operation can be
+                                                performed on digit-characters to obtain a numerical representation of the data
+                                                which can then be used to index the 9-element boolean array to "close" the
+                                                appropriate tile. Refer to section 3 of chapter 4 in the textbook and the
+                                                RandomChars program and the SaltPassword project.                          
+
+                                2nd Approach:   The String object can be used to construct a Scanner object; then, the
+                                                nextInt() Scanner-method can be used to parse the user-input easily. Refer to
+                                                the notes in the program description and the Constructor section of the
+                                                Scanner class within the Java API.
+
+                    3) Update: Update the points.
+                    4) Check if Game Has Been Won: If all tiles are "closed", then the game is over.
+                <End of Inner-Loop>
+    
+        D) Display Game Results: Print the game results: Win/Lose and the number of points.
+        E) Play Again?: Prompt the user to play again.
+        <End of Outer-Loop>
+    
+    3) Display Match Results: Print the match results: Number of wins/losses and the total number of points.
+    Note: The pseudocode does not include error-checking.
+
+*/
+
+public class ShutTheBox {
+    public static void main(String[] args) {
+        // Istantiate Objects:
+        Scanner scanner = new Scanner(System.in);
+        Random random   = new Random();
+
+        // Welcome to the 'Shut the Box' Game.
+        System.out.println("Welcome to the 'Shut the Box' Game.\n");
+
+        //  Outer-Loop: Start Game
+        // -------------------------------------------------------------------------
+        int games = 0;  // Start New Game
+        int wins  = 0;  // Start New Game
+
+        boolean playGame = true;                                                    // Set playGame to "On": On/Off Switch
+        while ( playGame = true ) {                                                 // <OUTER-LOOP>
+            // Start Game:
+            games++;                                                                // "Begin playing round #1."
+
+            // "Begin playing game #1."
+            System.out.println("Begin playing game #" + games + ".");
+
+            // Set Seed                                                             // random.setSeed(seed);
+            setSeed(scanner, random);
+
+            // newBoard: Create the Board array
+            boolean[] board = newBoard(9);                                          // create the board array
+
+            // Inner-Loop: Start Round
+            // ---------------------------------------------------------------------
+            int rounds = 0;                                                         // Rounds at Start New Game
+            boolean continuePlaying = true;                                         // Set to "On" - On/Off Switch    
+            while(continuePlaying = true){                                          // <INNER-LOOP>
+                rounds++;                                                           // Begin playing round #1.
+                int points = 0;
+
+                // showBoard: Display the available tiles
+                showBoard(board);                                                   // The available number(s) are: 1 2 4 5 6 7 9
+
+                // rollDice:   Roll the 1 die or 2 dice (depending upon status of tiles 7, 8, and 9).
+                int dice = getNumberOfDice(scanner, board);                         // Roll the die/dice:  1 or 2
+                int roll = rollDice(dice, 6, random);
+
+                // --------------------------------
+                // Comment for testing:
+                // --------------------------------
+                continuePlaying = true;
+                //continuePlaying = ShutTheBox_HelperClass.continuePlaying(board, roll);
+                // --------------------------------
+                if(continuePlaying == false){
+                    // End Round: 
+                    System.out.println("End Round: ");
+                    break;
+                } 
+                else {
+                    // Prompt User & Close Tiles
+                    closeTiles(scanner, board);
+
+                    // Update Points
+                    points = updatePoints(board);
+
+                    ///----------------------------------------------
+                    // Check for Win!
+                    ///----------------------------------------------
+                    boolean isAllClosed = isAllClosed(board);
+                    if(isAllClosed == true) {
+                        // Congratulations, you won!
+                        wins++;
+                        System.out.println("Congratulations, you won!");
+                        continuePlaying = false;
+                    }
+                }
+            }
+            // ---------------------------------------------------------------------
+            // Inner-Loop: End Round:
+
+            // Ask Play Game Again: playGame = true/false;
+            String prompt = "\nDo you wish to play again? Enter \"No\" " +
+                "to play again or anything else to quit.";
+            playGame = askPlayAgain(scanner, prompt);
+
+        }
+        // -------------------------------------------------------------------------
+        //  Outer-Loop: End Game
+
+        // close the scanner object
+        scanner.close();
+
+    } // End: main (String[] args)
+
+
+//------------------------------------------------------    
+//                      Methods:
+//------------------------------------------------------
+    // Method: Enter and Set the seed
+    public static void setSeed (Scanner scanner, Random random) {
+        System.out.println("Enter a seed: ");
+        String input = scanner.nextLine();
+        int seed = 0;
+        if (input.matches("-?[1-9]\\d*|0")) {
+            seed = Integer.parseInt(input);  
+        } else {
+            System.out.println("Error! The entry \"" + input + "\" is not an integer.");
+            setSeed(scanner, random);
+        }
+        random.setSeed(seed);
+    }
+
+    // Method: Create new board
+    public static boolean[] newBoard (int numberOfTiles) {
+        // builds the boolean[] tiles array
+        boolean[] board = new boolean[numberOfTiles];               // boolean[] tiles
+
+        // set all tiles to true
+        for(int i = 0; i < board.length; i++){
+            board[i] = true;
+        }
+        return board;
+    }
+
+    // Method: Show the Board Tiles
+    public static void showBoard (boolean[] board) {
+
+        // "The available number(s) are: 1 2 3 4 5 6 7 8 9 "
+        System.out.print("\nThe available number(s) are: ");
+        for (int i = 1; i <= board.length; i++) {
+            // display the available tiles
+            if (board[i-1] == true) {
+                System.out.print(i + " ");
+            } 
+        }
+        System.out.print("\n\n");
+
+        return ;
+    }
+
+    // Method: Check if Game was won!
+    public static boolean isAllClosed (boolean[] board) {
+        // check if all tiles are closed
+        int closedTiles = board.length;
+        for (int i = 1; i <= board.length; i++) {
+            if (board[i-1] == true) {
+                closedTiles--;
+            }
+        }
+        //System.out.println("closedTiles: " + closedTiles);                    // for testing
+        boolean isAllClosed = false;
+        if (closedTiles == board.length){
+            // if all tiles are closed, end game.
+            isAllClosed = true;
+        } else {
+            // if not all tiles are closed, continue game.
+            isAllClosed = false;
+        }
+        return isAllClosed;
+
+        /*
+        boolean allClosed = true;
+        for (int i = 0; i < tiles.length; i++) {
+            if (tiles[i] == true) {
+                allClosed = false;
+            }
+        }
+        return allClosed;
+        */
+    }
+
+    // Method: Get the Number Dice - 1 or2
+    static public int getNumberOfDice(Scanner scanner, boolean[] board) {
+        // why?
+        int dice = 2;
+
+        // Choose: if 7, 8, or 9 are closed
+        if(board[6] == false && board[7] == false && board[8] == false){
+            // Option: roll 1 die
+            System.out.println("The player may opt to roll 1 die or 2 dice " +
+                "because tiles 7, 8, and 9 are \"closed\".");
+            System.out.println("Enter \"1\" to roll 1 only die or \"2\" " +
+                "(or any other key) to roll 2 dice.");
+
+            String input = scanner.nextLine();
+            Scanner in = new Scanner(input);
+            while (in.hasNextInt()) {
+                dice = in.nextInt();
+                if(dice == 1){
+                    dice  = 1;
+                } else {
+                    dice  = 2;
+                }
+            }
+        } 
+        else {
+        // No Choice: roll 2 dice
+            dice  = 2;
+        }
+
+        return dice;
+    }
+
+    // Method: Roll Dice
+    public static int rollDice (int dice, int sides, Random random) {
+        int[] roll = new int[dice];
+        int sumRoll = 0;
+
+        for (int i = 0; i < dice; i++) {
+            roll[i] = random.nextInt(sides) + 1;
+            sumRoll += roll[i];
+        }
+        /// display the roll(s)
+        if(dice == 1) {
+            System.out.println("The die roll is " + roll[0] + ".");
+        } else {
+            System.out.println("The dice roll is " + roll[0] + " and " + roll[1] + " for a sum of " + sumRoll + ".");
+        }
+        return sumRoll;
+    }
+
+    // Method: Prompt User & Close Tiles
+    public static void closeTiles (Scanner scanner, boolean[] board) {
+        System.out.println("Which tile(s) should be \"closed\"? Separate multiple tiles with a space.");
+        int tile = -1;
+        String input = scanner.nextLine();
+        Scanner in = new Scanner(input);
+        while (in.hasNextInt()) {                   /// NEED Error Checking!!!!!!!! i.e "17 nor 1 7
+            tile = in.nextInt();
+            board[tile-1] = false;
+        }
+        in.close(); // close the scanner
+    }
+
+    // Method: updatePoints - Sum Open Tiles
+    public static int updatePoints (boolean[] board) {
+        int points = 0;
+        for (int i = 1; i <= board.length; i++) {
+            if (board[i-1] == true) {
+                points = points + i;
+            }
+        }
+        return points;
+    }
+
+    // Method: Ask Play Again
+    public static boolean askPlayAgain(Scanner scanner, String prompt) {
+        // String prompt = "Do you wish to play again? Enter "No" to play again or anything else to quit."
+        System.out.println(prompt);
+        boolean playGame = true;
+        String askPlayAgain = scanner.nextLine();
+        if (askPlayAgain.toUpperCase().equals("NO")) {
+            playGame = false;
+        } else {
+            playGame = true;
+        }
+//        System.out.println("testing: playAgain: " + playAgain);                          // testing
+        return playGame;
+    }
+
+
+}

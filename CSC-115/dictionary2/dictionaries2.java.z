@@ -1,0 +1,105 @@
+/*
+    import java.util.Scanner;
+    import java.util.Random;
+*/
+
+import java.util.*;
+
+public class dictionaries2 {
+    public static void main(String[] args) {
+
+        // Simple Dictionary
+        int[][]     arr2d_int;
+        String[][]  arr2d_String;
+        double[][]  arr2d_double;
+
+        // 2D Dictionairies
+        //-------------------
+        
+        // Create a 2D dictionary
+        int[][] arr2d_int_2 = {               // int
+            {1,2,}
+            ,
+            {3,4,5,6}
+        };
+
+        System.out.println("test    : " + arr2d_int[0][arr2d_int[0].length-1]);
+
+
+        // Creating an empty Dictionary object
+        Dictionary<Integer, String> dict = new Hashtable<Integer, String>();
+
+        // Inserting values into the Dictionary
+        dict.put(10, "Geeks");
+        dict.put(15, "4");
+        dict.put(20, "Geeks");
+        dict.put(25, "Welcomes");
+        dict.put(30, "You");
+
+        // Displaying the Dictionary
+        //System.out.println("Initial Dictionary is : " + dict);
+        //System.out.println("Get Value with Key    : " + dict.get(10) );
+
+
+        // * Loop through Hash Table *
+
+        // Create Enumeration Interface and get .keys() from Hashtable
+        Enumeration<Integer> e = dict.keys();
+        //System.out.println("e    : " + e );
+
+        // loope thorugh hash table
+        while (e.hasMoreElements()) {
+            // Getting the key of the next entry
+            int key = e.nextElement();
+ 
+            // Print the Rank and Name using the Get method
+            System.out.println("Rank : " + key + "\t Name : " + dict.get(key));
+        }
+
+        // Inserting existing key along with new value
+        //String returned_value = (String)dict.put(20, "All");
+  
+        // Verifying the returned value
+        //System.out.println("Returned value is: " + returned_value);
+  
+        // Displaying the new table
+        //System.out.println("New Dictionary is: " + dict);
+
+
+        // Remove
+        //dict.remove(30); // "You"
+        //System.out.println("The Dictionary is now: " + dict);
+
+
+        //System.out.println("Key   : " + arr2d_int[][]);
+        //System.out.println("Value : " + arr2d_int[][]);
+
+        double[][] arr2d_double = {     // double
+            {1.5, 2.6, 3.7}
+            , 
+            {7.5, 6.4, 5.3}
+            ,
+            {9.8,  8.7, 7.6}
+            ,
+            {3.6, 5.7, 7.8}
+        };
+
+        // hypercube
+        int[][][] arr4d_int = {
+            {
+                {1,2,3}
+                ,
+                {4,5,6}
+            }
+            ,
+            {
+                {7,8,9}
+                ,
+                {10,11,12}
+            }
+        };
+
+        
+        // Multimap
+    }
+}

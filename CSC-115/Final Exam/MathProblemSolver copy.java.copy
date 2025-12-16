@@ -1,0 +1,441 @@
+
+/*
+    Math Problem Solver
+    Introduction:
+
+    This is a menu driven program that leverages different methods. The choices are:
+
+    1.  Decide if the three numbers given by the user are a Pythagorean Triplet.
+        isPythagoreanTriplet(int, int, int)
+    
+    2.  Decide if a number given by the user is a prime number.
+        isPrimeNumber(int)
+    
+    3.  Display the factor-pairs of a number provided by the user.
+        showFactors(int)
+    
+    4.  Display the greatest common factor (GCF) of two numbers provided by the user.
+        greatestCommonFactor(int, int)
+    
+    5.  Display the proper-divisors of a number provided by the user.
+        properDivisor(int)
+            - Observe that proper divisors exclude the 'host number'; for example, the proper divisors of 6 are {1, 2, 3}.
+            - Observe that proper divisors do not repeat divisors in a perfect square; proper divisors are not factor-pairs. For example, the proper divisors of 25 are {1, 5}.
+    
+    6.  Decide if a number entered by the user is a Perfect Number, Abundant Number, or Deficient Number.
+        isPerfectNumber(int)
+    
+    7.  Decide if two numbers entered by the user are Amicable Numbers.
+        areAmicable(int, int)
+    
+    8. Display the prime factors of a number entered by the user.
+        primeFactors(int)
+    
+    9.  Display the least common multiple (LCM) of two numbers using the prime factors entered by the user
+        leastCommonMultiple(int, int)
+        
+            - Observe that credit will not be awarded unless prime factors are used to compute the least common multiple (LCM).
+            The following resources demonstrate the process of calculating the: Video #1, Video #2. Webpage #1, and Webpage #2.
+    
+        Notes:
+
+    File name: MathProblemSolver.java
+    The code to complete each task should be in a separate method that is called by the main method. At least 9 methods must be used to complete the program. Loops must be used when appropriate.
+    Methods should call other methods. Do not repeat code unnecessarily; credit will be deducted for repeating code! For example, the "greatestCommonFactor()" method should call the "showFactors()" method.
+    Pay particular attention to the formatting - the output on the screen should look identical to the output in the sample output.
+    
+    - Some functionality is dependent upon other functionality. For example, the "greatest common factor (GCF)" functionality cannot be completed until the "factor-pairs" functionality is completed.
+    
+    Arrays may be used; however, arrays are not necessarily required.
+    
+    According to the rubric, 10% of the grade is assessed for "Manual Grade". This will be specifically applied to the construction and use of methods and formatting.
+    Credit will not be awarded for any part of this assignment completed using techniques/constructs not presented in this course.
+    Reference Material:
+
+    The Relevant API (in particular, the Scanner and Random sections)
+    The actual Java API for Random
+
+    The actual Java API for Scanner
+
+    An introductory video
+    Sample Output:
+
+    Example #1: Pythagorean Triplet Checker:
+
+    ===================
+    Math Problem Solver
+    ===================
+
+    Select one of the options:
+    0. Quit
+    1. Determine if 3 user-defined numbers are a Pythagorean triplet?
+    2. Determine if a user-defined number a prime number?
+    3. Compute the factor-pairs of a user-defined number.
+    4. Determine the greatest common factor of 2 user-defined numbers.
+    5. Compute the proper divisors of a user-defined number.
+    6. Determine whether a user-defined number is a perfect number, abundant number, or deficient number?
+    7. Determine if 2 user-defined numbers are amicable numbers?
+    8. Compute the prime factors of a user-defined number.
+    9. Determine the least common multiple of 2 user-defined numbers.
+
+    Please make a selection:
+    1
+    Enter the first number:
+    4
+    Enter the second number:
+    3
+    Enter the third number:
+    5
+    The numbers 4, 3, and 5 do form a Pythagorean Triplet.
+
+*/
+
+import java.util.Scanner;
+
+public class MathProblemSolver
+{
+  public static void main(String [] args) {
+    // Istantaion of the Scanner object
+    Scanner scanner = new Scanner(System.in);
+
+    // Display the Menu
+    menu();
+
+    // Prompt the user to make a selection
+    String prompt = "";
+    prompt = "Please make a selection: ";
+    int selection = getNumber(scanner, prompt);
+
+    // Determines if the user wants to quit
+    if(selection == 0) {
+        System.out.println("Thank you for using the Math Problem Solver program.");
+    }
+
+    // 1. Determine if 3 user-defined numbers are a Pythagorean triplet?
+    if (selection == 1) {
+        // Enter the First Number
+        prompt = "Enter the first number:";
+        int firstNumber = getNumber(scanner, prompt);
+
+        // Enter the Second Number
+        prompt = "Enter the second number:";
+        int secondNumber = getNumber(scanner, prompt);
+
+        // Enter the Third Number
+        prompt = "Enter the third number:";
+        int thirdNumber = getNumber(scanner, prompt);
+
+        // Determine if the numbers are a Pythagorean Triplet
+        isPythagoreanTriplet(firstNumber, secondNumber, thirdNumber);
+    }
+
+    // 2. Determine if a user-defined number is a prime number?
+    if (selection == 2) {
+        // Enter the Number
+        prompt = "Enter the number:";
+        int number = getNumber(scanner, prompt);
+
+        // Determine if the number is a prime number
+        isPrimeNumber(number);
+    }
+
+    // 3. Compute the factor-pairs of a user-defined number.
+    if (selection == 3) {
+        // Enter the Number
+        prompt = "Enter the number:";
+        int number = getNumber(scanner, prompt);
+
+        // Compute the factor-pairs of the number
+        showFactorPairs(number);
+    }
+
+    // 4. Determine the greatest common factor of 2 user-defined numbers.
+    if (selection == 4) {
+        // Enter the First Number
+        prompt = "Enter the first number:";
+        int firstNumber = getNumber(scanner, prompt);
+
+        // Enter the Second Number
+        prompt = "Enter the second number:";
+        int secondNumber = getNumber(scanner, prompt);
+
+        // Determine the greatest common factor of the numbers
+        greatestCommonFactor(firstNumber, secondNumber);
+    }
+    
+    // 5. Compute the proper divisors of a user-defined number.
+    if (selection == 5) {
+        // Enter the Number
+        prompt = "Enter the number:";
+        int number = getNumber(scanner, prompt);
+
+        // Compute the proper divisors of the number
+        properDivisor(number);
+    }
+
+    // 6. Determine whether a user-defined number is a perfect number, abundant number, or deficient number?
+    if (selection == 6) {
+        // Enter the Number
+        prompt = "Enter the number:";
+        int number = getNumber(scanner, prompt);
+
+        // Determine whether the number is a perfect number, abundant number, or deficient number
+        isPerfectNumber(number);
+
+    }
+
+    // 7. Determine if 2 user-defined numbers are amicable numbers?
+    if (selection == 7) {
+        // Enter the First Number
+        prompt = "Enter the first number:";
+        int firstNumber = getNumber(scanner, prompt);
+
+        // Enter the Second Number
+        prompt = "Enter the second number:";
+        int secondNumber = getNumber(scanner, prompt);
+
+        // Determine if the numbers are amicable numbers
+        isAmicableNumber(firstNumber, secondNumber);
+    }
+
+    // 8. Compute the prime factors of a user-defined number.
+    if (selection == 8) {
+        // Enter the Number
+        prompt = "Enter the number:";
+        int number = getNumber(scanner, prompt);
+
+        // Compute the prime factors of the number
+        primeFactors(number);
+    }
+
+    // 9. Determine the least common multiple of 2 user-defined numbers.
+    if (selection == 9) {
+        // Enter the First Number
+        prompt = "Enter the first number:";
+        int firstNumber = getNumber(scanner, prompt);
+
+        // Enter the Second Number
+        prompt = "Enter the second number:";
+        int secondNumber = getNumber(scanner, prompt);
+
+        // Determine the least common multiple of the numbers
+        leastCommonMultiple(firstNumber, secondNumber);
+    }
+
+    // Close the Scanner
+        scanner.close();
+    }
+
+    // Display the Menu
+    public static void menu() {
+        System.out.println("==================");
+        System.out.println("Math Problem Solver");
+        System.out.println("==================");
+        System.out.println("Select one of the options:");
+        System.out.println("0. Quit");
+        System.out.println("1. Determine if 3 user-defined numbers are a Pythagorean triplet?");
+        System.out.println("2. Determine if a user-defined number is a prime number?");
+        System.out.println("3. Compute the factor-pairs of a user-defined number.");
+        System.out.println("4. Determine the greatest common factor of 2 user-defined numbers.");
+        System.out.println("5. Compute the proper divisors of a user-defined number.");
+        System.out.println("6. Determine whether a user-defined number is a perfect number, abundant number, or deficient number?");
+        System.out.println("7. Determine if 2 user-defined numbers are amicable numbers?");
+        System.out.println("8. Compute the prime factors of a user-defined number.");
+        System.out.println("9. Determine the least common multiple of 2 user-defined numbers.");
+        //System.out.println("Please make a selection:");
+    }
+
+    // Enter a Number
+    public static int getNumber(Scanner scanner, String prompt) {
+        //Scanner sc = new Scanner(System.in);
+        System.out.println(prompt);
+        int number = scanner.nextInt();
+        //sc.close();
+        return number;
+    }
+
+    // 1. Determine if 3 user-defined numbers are a Pythagorean triplet?
+    public static void isPythagoreanTriplet(int firstNumber, int secondNumber, int thirdNumber) {
+        if ( (firstNumber*firstNumber) + (secondNumber*secondNumber) == (thirdNumber*thirdNumber) ) {
+            System.out.println("The numbers " + firstNumber + ", " + secondNumber + ", and " + thirdNumber + " do form a Pythagorean Triplet.");
+        } else {
+            System.out.println("The numbers " + firstNumber + ", " + secondNumber + ", and " + thirdNumber + " do not form a Pythagorean Triplet.");
+        }
+    }
+
+    // 2. Determine if a user-defined number is a prime number?
+    public static void isPrimeNumber(int firstNumber) {
+        if (firstNumber == 2) {
+            System.out.println("The number " + firstNumber + " is a prime number.");
+        } else if (firstNumber % 2 == 0) {
+            System.out.println("The number " + firstNumber + " is not a prime number.");
+        } else {
+            for (int i = 3; i <= Math.sqrt(firstNumber); i += 2) {
+                if (firstNumber % i == 0) {
+                    System.out.println("The number " + firstNumber + " is not a prime number.");
+                    break;
+                } else {
+                    System.out.println("The number " + firstNumber + " is a prime number.");
+                }
+            }
+        }
+    }
+
+    // 3. Compute the factor-pairs of a user-defined number.
+    // System.out.println("The factor pairs of 3 are: {1, 3}.");
+    public static void showFactorPairs(int number) {
+        int count = 0;
+        for (int i = 1; i <= number; i++) {
+            if (number % i == 0) {
+                count++;
+                //if (count == 1) {
+                //    System.out.print("The factor pairs of " + number + " are: {");
+                //}
+                System.out.print("{" + i + ", " + (number/i) + "}");
+                if (count == 2) {
+                    System.out.println("}.");
+                } 
+                //else {
+                //    System.out.print(", ");
+                //}
+            }
+        }
+        if (count == 0) {
+            System.out.println("The number " + number + " has no factor pairs.");
+        }
+    }
+
+    // 4. Determine the greatest common factor of 2 user-defined numbers.
+    public static void greatestCommonFactor(int firstNumber, int secondNumber) {
+        int greatestCommonFactor = 1;
+        for (int i = 1; i <= firstNumber; i++) {
+            if (firstNumber % i == 0 && secondNumber % i == 0) {
+                greatestCommonFactor = i;
+            }
+        }
+        System.out.println("The greatest common factor (GCF) of " + firstNumber + " and " + secondNumber + " is " + greatestCommonFactor);
+    }
+
+    // 5. Compute the proper divisors of a user-defined number.
+    public static void properDivisor(int firstNumber) {
+        int sum = 0;
+        for (int i = 1; i <= firstNumber; i++) {
+            if (firstNumber % i == 0) {
+                sum += i;
+            }
+        }
+        System.out.println("The proper divisors of " + firstNumber + " are " + sum);
+    }
+    // 6. Determine whether a user-defined number is a perfect number, abundant number, or deficient number?
+    public static void isPerfectNumber(int firstNumber) {
+        int sum = 0;
+        for (int i = 1; i <= firstNumber; i++) {
+            if (firstNumber % i == 0) {
+                sum += i;
+            }
+        }
+        if (sum == firstNumber) {
+            System.out.println("The number " + firstNumber + " is a perfect number.");
+        } else if (sum > firstNumber) {
+            System.out.println("The number " + firstNumber + " is an abundant number.");
+        } else {
+            System.out.println("The number " + firstNumber + " is a deficient number.");
+        }
+    }
+
+    // 7. Determine if 2 user-defined numbers are amicable numbers?
+    public static void isAmicableNumber(int firstNumber, int secondNumber) {
+        int sum1 = 0;
+        int sum2 = 0;
+        for (int i = 1; i <= firstNumber; i++) {
+            if (firstNumber % i == 0) {
+                sum1 += i;
+            }
+        }
+        for (int i = 1; i <= secondNumber; i++) {
+            if (secondNumber % i == 0) {
+                sum2 += i;
+            }
+        }
+        if (sum1 == secondNumber && sum2 == firstNumber) {
+            System.out.println("The numbers " + firstNumber + " and " + secondNumber + " are amicable numbers.");
+        } else {
+            System.out.println("The numbers " + firstNumber + " and " + secondNumber + " are not amicable numbers.");
+        }
+    }
+
+
+    // 8. Compute the prime factors of a user-defined number.
+    public static void primeFactors(int firstNumber) {
+        System.out.println("The prime factors of " + firstNumber + " are:");
+        for (int i = 2; i <= firstNumber; i++) {
+            if (firstNumber % i == 0) {
+                System.out.println(i);
+            }
+        }
+    }
+
+    // 9. Determine the least common multiple of 2 user-defined numbers.
+    public static void leastCommonMultiple(int firstNumber, int secondNumber) {
+        int leastCommonMultiple = 1;
+        for (int i = 1; i <= firstNumber; i++) {
+            if (firstNumber % i == 0 && secondNumber % i == 0) {
+                leastCommonMultiple = i;
+            }
+        }
+        System.out.println("The least common multiple of " + firstNumber + " and " + secondNumber + " is " + leastCommonMultiple);
+    }
+}
+
+
+/*
+    //////////////////////////////////////////////////////////
+    1. Determine if 3 user-defined numbers are a Pythagorean triplet?
+        Please make a selection:
+        1
+        Enter the first number:
+        4
+        Enter the second number:
+        3
+        Enter the third number:
+        5
+        The numbers 4, 3, and 5 do form a Pythagorean Triplet.
+
+        Please make a selection:
+        1
+        Enter the first number:
+        25
+        Enter the second number:
+        9
+        Enter the third number:
+        16
+        The numbers 25, 9, and 16 do not form a Pythagorean Triplet.
+
+    //////////////////////////////////////////////////////////
+    2. Determine if a user-defined number a prime number?
+        Please make a selection:
+        2
+        Enter a number:
+        2
+        The number 2 is a prime number.
+
+        Please make a selection:
+        2
+        Enter a number:
+        4
+        The number 4 is not a prime number.
+
+    //////////////////////////////////////////////////////////
+    3. Compute the factor-pairs of a user-defined number.
+        Please make a selection:
+        3
+        Enter a number:
+        3
+        The factor pairs of 3 are: {1, 3}.
+
+        Please make a selection:
+        3
+        Enter a number:
+        6
+        The factor pairs of 6 are: {1, 2, 3, 6}.
+*/
